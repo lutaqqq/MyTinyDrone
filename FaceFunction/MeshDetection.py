@@ -39,12 +39,6 @@ class FaceMeshDetector:
             if self.results.multi_face_landmarks:
                 for faceLms in self.results.multi_face_landmarks:
                     self.draw_rectangle(frame, faceLms)
-                # Update the face count with the number of faces detected
-                face_count = f'Faces: {len(self.results.multi_face_landmarks)}'
-                effect_text = f'Effects: {self.effects}'
-                cv2.putText(frame, face_count, (10, 25), self.FONT, self.SCALE, self.TEXT_COLOR, self.THICKNESS)
-                cv2.putText(frame, effect_text, (10, 50), self.FONT, self.SCALE, self.TEXT_COLOR, self.THICKNESS)
-                print(face_count)
         except Exception as e:
             print(f"Ошибка. Лицо не найдено: {e}")
 
