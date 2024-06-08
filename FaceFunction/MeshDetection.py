@@ -33,8 +33,8 @@ class FaceMeshDetector:
     def detect_faces(self, frame: np.ndarray) -> None:
 
         try:
-            self.imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Convert BGR image to RGB
-            self.results = self.faceMesh.process(self.imgRGB)  # Process the image with the face mesh model
+            self.imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+            self.results = self.faceMesh.process(self.imgRGB)
 
             if self.results.multi_face_landmarks:
                 for faceLms in self.results.multi_face_landmarks:
@@ -43,7 +43,6 @@ class FaceMeshDetector:
             print(f"Ошибка. Лицо не найдено: {e}")
 
     def draw_rectangle(self, frame: np.ndarray, faceLms: mp.solutions.face_mesh.NamedTuple) -> None:
-
         try:
 
             ih, iw, ic = frame.shape

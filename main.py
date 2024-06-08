@@ -7,7 +7,6 @@ from datetime import datetime
 import cv2
 import threading
 import os
-from FaceFunction.FrontalDetection import FrontalFaceDetector
 from FaceFunction.MeshDetection import FaceMeshDetector
 
 class DroneController:
@@ -148,7 +147,7 @@ class DroneController:
             self.flip_forward_button.grid(column=0, row=2, padx=10, pady=5)
             self.flip_back_button.grid(column=0, row=3, padx=10, pady=5)
         except Exception as e:
-            messagebox.showerror('Ошибка', f'Ошибка при создании кнопок флипа: {e}')
+            messagebox.showerror({e})
 
     def execute_flip(self, direction):
         try:
