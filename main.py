@@ -72,7 +72,7 @@ class DroneController:
         self.text1 = Label(self.root, text=
         'W - Подняться\t\t\t\tСтрелка Вверх - Движение вперед\n'
         'S - Спуститься\t\t\t\tСтрелка Вниз - Движение назад\n'
-        'A - Поворот против часовой стрелки\tСтрелка Влево - Движение влево\n'
+        'A - Поворот против часовой стрелке\tСтрелка Влево - Движение влево\n'
         'D - Поворот по часовой стрелке\t\tСтрелка Вправо - Движение вправо',
                            justify='left')
         self.text1.grid(column=1, row=1)
@@ -99,7 +99,7 @@ class DroneController:
                     os.makedirs(folder_name)
 
                 full_path = os.path.join(folder_name, filename)
-                self.out = cv2.VideoWriter(full_path, fourcc, 30, (w, h))
+                self.out = cv2.VideoWriter(full_path, fourcc, 60, (w, h))
                 self.is_recording = True
                 self.camera_record_button.config(text='Остановить запись')
                 threading.Thread(target=self.record_tello_video).start()
@@ -118,6 +118,8 @@ class DroneController:
         try:
             while self.is_recording:
                 frame = self.frame.frame
+                # Конвертируем кадр в формат RGB перед записью
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 self.out.write(frame)
         except Exception as e:
             messagebox.showerror('Ошибка', f'Не удалось начать запись видео: {e}')
@@ -224,10 +226,11 @@ class DroneController:
             self.cap_lbl.configure(image=imgtk)
 
             if self.is_recording and self.out:
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 self.out.write(frame)
 
             self.root.update_idletasks()
-            self.cap_lbl.after(15, self.video_stream)
+            self.cap_lbl.after(30, self.video_stream)
         except Exception as e:
             messagebox.showerror('Ошибка', f'Ошибка в потоке видео: {e}')
 
